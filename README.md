@@ -1,11 +1,10 @@
-# everon-factory
-Beta version
-
-# Everon Factory v0.5
+# Everon Factory Component v1.0
 Library to handle dependency injection and instantiation. Allows to produce code that is easy to test.
 
-## Requirements
+## Works with
 * Php 5.5+
+* Php 7
+* Hhvm
 
 ## Features
 * One line, lazy loaded dependency injection (via setters or constructors)
