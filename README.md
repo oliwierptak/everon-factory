@@ -1,11 +1,10 @@
-# everon-factory
-Beta version
-
-# Everon Factory v0.5
+# Everon Factory Component v1.0
 Library to handle dependency injection and instantiation. Allows to produce code that is easy to test.
 
-## Requirements
-* Php 5.5+
+## Works with
+* Php 5.6+
+* Php 7
+* Hhvm
 
 ## Features
 * One line, lazy loaded dependency injection (via setters or constructors)
@@ -137,9 +136,8 @@ class MyApplicationFactoryWorker extends AbstractWorker implements FactoryWorker
      */
     protected function registerBeforeWork()
     {
-        $Factory = $this->getFactory();
-        $this->getFactory()->getDependencyContainer()->propose('MyApplicationFactoryWorker', function () use ($Factory) {
-            return $Factory->getWorkerByName('MyApplication', 'MyApplication\Modules\Application\Factory');
+        $this->registerWorker('MyApplicationFactoryWorker', function () {
+            return $this->getFactory()->getWorkerByName('MyApplication', 'MyApplication\Modules\Application\Factory');
         });
     }
 

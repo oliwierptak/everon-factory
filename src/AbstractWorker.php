@@ -28,6 +28,24 @@ abstract class AbstractWorker implements FactoryWorkerInterface
     }
 
     /**
+     * <code>
+     *   $this->registerWorker('StubFactoryWorker', function () {
+     *       return $this->getFactory()->getWorkerByName('Stub', 'Everon\Component\Factory\Tests\Unit\Doubles');
+     *   });
+     * </code>
+     *
+     *
+     * @param $name
+     * @param \Closure $callback FactoryWorkerInterface should be returned
+     *
+     * @return void
+     */
+    protected function registerWorker($name, \Closure $callback)
+    {
+        $this->getFactory()->getDependencyContainer()->propose($name, $callback);
+    }
+
+    /**
      * @inheritdoc
      */
     public function doWork()

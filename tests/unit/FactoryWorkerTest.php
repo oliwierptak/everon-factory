@@ -94,13 +94,13 @@ class FactoryWorkerTest extends MockeryTest
     public function test_do_work()
     {
         $Container = Mockery::mock('Everon\Component\Factory\Dependency\ContainerInterface');
-        $Container->shouldReceive('register')->times(1)
-            ->andReturn($this->FactoryWorker);
 
         $Factory = $this->FactoryWorker->getFactory();
         /* @var MockInterface $Factory */
         $Factory->shouldReceive('getDependencyContainer')->times(1)
             ->andReturn($Container);
+        $Container->shouldReceive('propose')->times(1)
+            ->andReturn($this->FactoryWorker);
 
         $result = $this->FactoryWorker->doWork();
 
