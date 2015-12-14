@@ -140,7 +140,7 @@ class FactoryTest extends MockeryTest
             ->with('Everon\Component\Factory\Tests\Unit\Doubles\StubFactoryWorker')
             ->andReturn(false);
 
-        $Container->shouldReceive('register')->times(1)
+        $Container->shouldReceive('propose')->times(1)
             ->andReturn($FactoryWorker);
 
         $Worker = $this->Factory->getWorkerByName('Stub', 'Everon\Component\Factory\Tests\Unit\Doubles');
@@ -160,7 +160,7 @@ class FactoryTest extends MockeryTest
             ->with('Everon\Component\Factory\Tests\Unit\Doubles\StubFactoryWorker')
             ->andReturn(false);
 
-        $Container->shouldReceive('register')->times(1)
+        $Container->shouldReceive('propose')->times(1)
             ->andReturn($FactoryWorker);
 
         $Worker = $this->Factory->getWorkerByName('Stub', 'Everon\Component\Factory\Tests\Unit\Doubles');

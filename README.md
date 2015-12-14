@@ -137,9 +137,8 @@ class MyApplicationFactoryWorker extends AbstractWorker implements FactoryWorker
      */
     protected function registerBeforeWork()
     {
-        $Factory = $this->getFactory();
-        $this->getFactory()->getDependencyContainer()->propose('MyApplicationFactoryWorker', function () use ($Factory) {
-            return $Factory->getWorkerByName('MyApplication', 'MyApplication\Modules\Application\Factory');
+        $this->registerWorker('MyApplicationFactoryWorker', function () {
+            return $this->getFactory()->getWorkerByName('MyApplication', 'MyApplication\Modules\Application\Factory');
         });
     }
 
