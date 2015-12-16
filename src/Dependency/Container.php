@@ -53,13 +53,14 @@ class Container implements ContainerInterface
     protected $InjectedCollection;
 
     /**
-     * @param $setterName
+     * @param string $setterName
      * @param $Receiver
      *
      * @throws UndefinedContainerDependencyException
      * @throws UndefinedDependencySetterException
+     * @return void
      */
-    protected function injectSetterDependency($setterName, $Receiver)
+    protected function injectSetterDependency(string $setterName, $Receiver)
     {
         $receiverClassName = get_class($Receiver);
         $method = 'set' . $setterName; //eg. setConfigManager
@@ -78,12 +79,12 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @param $className
+     * @param string $className
      * @param bool $autoload
      *
      * @return array
      */
-    protected function getClassSetterDependencies($className, $autoload = true)
+    protected function getClassSetterDependencies(string $className, bool $autoload = true): array
     {
         if ($this->getClassDependencyCollection()->has($className)) {
             return $this->getClassDependencyCollection()->get($className);
@@ -110,11 +111,11 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @param $dependencyName
+     * @param string $dependencyName
      *
      * @return bool
      */
-    protected function isSetterInjection($dependencyName)
+    protected function isSetterInjection(string $dependencyName): bool
     {
         $requiredDependency = $this->textLastTokenToName($dependencyName);
         $setterDependency = sprintf('%s\%s', static::TYPE_SETTER_INJECTION, $requiredDependency);
@@ -123,19 +124,19 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @param $dependencyName
+     * @param string $dependencyName
      *
      * @return bool
      */
-    protected function isFactoryInjection($dependencyName)
+    protected function isFactoryInjection(string $dependencyName): bool
     {
         return $this->textEndsWith($dependencyName, static::DEPENDENCY_SETTER_FACTORY);
     }
 
     /**
-     * @inheritdoc
+     * @{inheritdoc}
      */
-    public function inject($receiverClassName, $ReceiverInstance)
+    public function inject(string $receiverClassName, $ReceiverInstance)
     {
         if (is_object($ReceiverInstance) === false) {
             throw new InstanceIsNotObjectException();
@@ -154,9 +155,9 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @inheritdoc
+     * @{inheritdoc}
      */
-    public function injectOnce($receiverClassName, $ReceiverInstance)
+    public function injectOnce(string $receiverClassName, $ReceiverInstance)
     {
         if ($this->isInjected($receiverClassName)) {
             return;
@@ -166,9 +167,9 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @inheritdoc
+     * @{inheritdoc}
      */
-    public function register($name, \Closure $ServiceClosure)
+    public function register(string $name, \Closure $ServiceClosure)
     {
         if ($this->isRegistered($name)) {
             throw new DependencyServiceAlreadyRegisteredException($name);
@@ -180,9 +181,9 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @inheritdoc
+     * @{inheritdoc}
      */
-    public function propose($name, \Closure $ServiceClosure)
+    public function propose(string $name, \Closure $ServiceClosure)
     {
         if ($this->isRegistered($name)) {
             return;
@@ -192,9 +193,9 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @inheritdoc
+     * @{inheritdoc}
      */
-    public function resolve($name)
+    public function resolve(string $name)
     {
         if ($this->getServiceDefinitionCollection()->has($name) === false) {
             throw new UndefinedContainerDependencyException($name);
@@ -214,33 +215,33 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @inheritdoc
+     * @{inheritdoc}
      */
-    public function isFactoryRequired($className)
+    public function isFactoryRequired(string $className): bool
     {
         return $this->getRequireFactoryCollection()->has($className);
     }
 
     /**
-     * @inheritdoc
+     * @{inheritdoc}
      */
-    public function isInjected($className)
+    public function isInjected(string $className): bool
     {
         return $this->getInjectedCollection()->has($className);
     }
 
     /**
-     * @inheritdoc
+     * @{inheritdoc}
      */
-    public function isRegistered($name)
+    public function isRegistered(string $name): bool
     {
         return ($this->getServiceDefinitionCollection()->has($name) || $this->getServiceCollection()->has($name));
     }
 
     /**
-     * @inheritdoc
+     * @{inheritdoc}
      */
-    public function getServiceDefinitionCollection()
+    public function getServiceDefinitionCollection(): CollectionInterface
     {
         if ($this->ServiceDefinitionCollection === null) {
             $this->ServiceDefinitionCollection = new Collection([]);
@@ -250,9 +251,9 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @inheritdoc
+     * @{inheritdoc}
      */
-    public function getClassDependencyCollection()
+    public function getClassDependencyCollection(): CollectionInterface
     {
         if ($this->ClassDependencyCollection === null) {
             $this->ClassDependencyCollection = new Collection([]);
@@ -262,9 +263,9 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @inheritdoc
+     * @{inheritdoc}
      */
-    public function getServiceCollection()
+    public function getServiceCollection(): CollectionInterface
     {
         if ($this->ServiceCollection === null) {
             $this->ServiceCollection = new Collection([]);
@@ -274,9 +275,9 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @inheritdoc
+     * @{inheritdoc}
      */
-    public function getRequireFactoryCollection()
+    public function getRequireFactoryCollection(): CollectionInterface
     {
         if ($this->RequireFactoryCollection === null) {
             $this->RequireFactoryCollection = new Collection([]);
@@ -286,9 +287,9 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @inheritdoc
+     * @{inheritdoc}
      */
-    public function getInjectedCollection()
+    public function getInjectedCollection(): CollectionInterface
     {
         if ($this->InjectedCollection === null) {
             $this->InjectedCollection = new Collection([]);

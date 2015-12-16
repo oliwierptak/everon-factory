@@ -43,7 +43,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritdoc
      */
-    public function injectDependencies($className, $Instance)
+    public function injectDependencies(string $className, $Instance)
     {
         $this->getDependencyContainer()->inject($className, $Instance);
         $this->injectFactoryWhenRequired($className, $Instance);
@@ -52,21 +52,21 @@ class Factory implements FactoryInterface
     /**
      * @inheritdoc
      */
-    public function injectDependenciesOnce($className, $Instance)
+    public function injectDependenciesOnce(string $className, $Instance)
     {
         $this->getDependencyContainer()->injectOnce($className, $Instance);
         $this->injectFactoryWhenRequired($className, $Instance);
     }
 
     /**
-     * @param $className
+     * @param string $className
      * @param object $Instance
      *
      * @throws MissingFactoryAwareInterfaceException
      *
      * @return void
      */
-    protected function injectFactoryWhenRequired($className, $Instance)
+    protected function injectFactoryWhenRequired(string $className, $Instance)
     {
         if ($this->getDependencyContainer()->isFactoryRequired($className)) {
             if (($Instance instanceof FactoryAwareInterface) === false) {
@@ -80,7 +80,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritdoc
      */
-    public function buildWithEmptyConstructor($className, $namespace)
+    public function buildWithEmptyConstructor(string $className, string $namespace)
     {
         $className = $this->getFullClassName($namespace, $className);
         $this->classExists($className);
@@ -105,7 +105,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritdoc
      */
-    public function buildWithConstructorParameters($className, $namespace, CollectionInterface $parameterCollection)
+    public function buildWithConstructorParameters(string $className, string $namespace, CollectionInterface $parameterCollection)
     {
         $className = $this->getFullClassName($namespace, $className);
         $this->classExists($className);
@@ -132,7 +132,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritdoc
      */
-    public function getDependencyContainer()
+    public function getDependencyContainer(): ContainerInterface
     {
         return static::$DependencyContainer;
     }
@@ -148,7 +148,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritdoc
      */
-    public function getFullClassName($namespace, $className)
+    public function getFullClassName(string $namespace, string $className): string
     {
         if ($className[0] === '\\') { //used for when laading classmap from cache
             return $className; //absolute name
@@ -160,7 +160,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritdoc
      */
-    public function classExists($class)
+    public function classExists(string $class)
     {
         if (class_exists($class, true) === false) {
             throw new UndefinedClassException($class);
@@ -170,7 +170,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritdoc
      */
-    public function buildParameterCollection(array $parameters)
+    public function buildParameterCollection(array $parameters): CollectionInterface
     {
         return new Collection($parameters);
     }
@@ -178,7 +178,7 @@ class Factory implements FactoryInterface
     /**
      * @inheritdoc
      */
-    public function getWorkerByName($name, $namespace='Everon\Component\Factory')
+    public function getWorkerByName(string $name, string $namespace='Everon\Component\Factory'): FactoryWorkerInterface
     {
         $className = sprintf('%sFactoryWorker', $name);
 
@@ -186,7 +186,7 @@ class Factory implements FactoryInterface
             return static::$WorkerCollection->get($className);
         }
 
-        /** @var FactoryWorkerInterface $Worker */
+        /** @var FactoryWorkerInterface $Worker x*/
         $Worker = $this->buildWithConstructorParameters($className, $namespace, $this->buildParameterCollection([
             $this,
         ]));

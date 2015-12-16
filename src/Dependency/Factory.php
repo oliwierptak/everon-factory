@@ -22,7 +22,7 @@ trait Factory
     /**
      * @return FactoryInterface
      */
-    public function getFactory()
+    public function getFactory(): FactoryInterface
     {
         return $this->Factory;
     }

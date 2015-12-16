@@ -22,7 +22,7 @@ interface ContainerInterface
      *
      * @return void
      */
-    public function inject($receiverClassName, $ReceiverInstance);
+    public function inject(string $receiverClassName, $ReceiverInstance);
 
     /**
      * @param string $receiverClassName
@@ -30,79 +30,79 @@ interface ContainerInterface
      *
      * @return void
      */
-    public function injectOnce($receiverClassName, $ReceiverInstance);
+    public function injectOnce(string $receiverClassName, $ReceiverInstance);
 
     /**
-     * @param $className
+     * @param string $className
      *
      * @return bool
      */
-    public function isFactoryRequired($className);
+    public function isFactoryRequired(string $className): bool;
 
     /**
-     * @param $name
+     * @param string $name
      * @param \Closure $ServiceClosure
      *
      * @throws DependencyServiceAlreadyRegisteredException
      *
      * @return void
      */
-    public function register($name, \Closure $ServiceClosure);
+    public function register(string $name, \Closure $ServiceClosure);
 
     /**
-     * @param $name
+     * @param string $name
      * @param \Closure $ServiceClosure
      *
      * @return void
      */
-    public function propose($name, \Closure $ServiceClosure);
+    public function propose(string $name, \Closure $ServiceClosure);
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @throws UndefinedContainerDependencyException
      *
      * @return mixed
      */
-    public function resolve($name);
+    public function resolve(string $name);
 
     /**
-     * @param $className
+     * @param string $className
      *
      * @return bool
      */
-    public function isInjected($className);
+    public function isInjected(string $className): bool;
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return bool
      */
-    public function isRegistered($name);
+    public function isRegistered(string $name): bool;
 
     /**
      * @return CollectionInterface
      */
-    public function getServiceDefinitionCollection();
+    public function getServiceDefinitionCollection(): CollectionInterface;
 
     /**
      * @return CollectionInterface
      */
-    public function getClassDependencyCollection();
+    public function getClassDependencyCollection(): CollectionInterface;
 
     /**
      * @return CollectionInterface
      */
-    public function getServiceCollection();
+    public function getServiceCollection(): CollectionInterface;
 
     /**
      * @return CollectionInterface
      */
-    public function getRequireFactoryCollection();
+    public function getRequireFactoryCollection(): CollectionInterface;
 
     /**
      * @return CollectionInterface
      */
-    public function getInjectedCollection();
+    public function getInjectedCollection(): CollectionInterface;
 
 }

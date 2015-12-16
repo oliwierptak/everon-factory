@@ -20,35 +20,35 @@ interface FactoryInterface
 {
 
     /**
-     * @param $className
+     * @param string $className
      * @param $Instance
      *
      * @return void
      */
-    public function injectDependencies($className, $Instance);
+    public function injectDependencies(string $className, $Instance);
 
     /**
-     * @param $className
+     * @param string $className
      * @param $Instance
      *
      * @return void
      */
-    public function injectDependenciesOnce($className, $Instance);
+    public function injectDependenciesOnce(string $className, $Instance);
 
     /**
-     * @param $className
-     * @param $namespace
+     * @param string $className
+     * @param string $namespace
      *
      * @throws MissingFactoryAwareInterfaceException
      * @throws UndefinedClassException
      *
      * @return object
      */
-    public function buildWithEmptyConstructor($className, $namespace);
+    public function buildWithEmptyConstructor(string $className, string $namespace);
 
     /**
-     * @param $className
-     * @param $namespace
+     * @param string $className
+     * @param string $namespace
      * @param CollectionInterface $parameterCollection
      *
      * @throws MissingFactoryAwareInterfaceException
@@ -56,12 +56,12 @@ interface FactoryInterface
      *
      * @return object
      */
-    public function buildWithConstructorParameters($className, $namespace, CollectionInterface $parameterCollection);
+    public function buildWithConstructorParameters(string $className, string $namespace, CollectionInterface $parameterCollection);
 
     /**
      * @return ContainerInterface
      */
-    public function getDependencyContainer();
+    public function getDependencyContainer(): ContainerInterface;
 
     /**
      * @param ContainerInterface $Container
@@ -71,31 +71,31 @@ interface FactoryInterface
     public function setDependencyContainer(ContainerInterface $Container);
 
     /**
-     * @param $namespace
-     * @param $className
+     * @param string $namespace
+     * @param string $className
      *
      * @return string
      */
-    public function getFullClassName($namespace, $className);
+    public function getFullClassName(string $namespace, string $className): string;
 
     /**
-     * @param $class
+     * @param string $class
      *
      * @throws UndefinedClassException
      *
      * @return void
      */
-    public function classExists($class);
+    public function classExists(string $class);
 
     /**
      * @param array $parameters
      *
      * @return CollectionInterface
      */
-    public function buildParameterCollection(array $parameters);
+    public function buildParameterCollection(array $parameters): CollectionInterface;
 
     /**
-     * @param $name
+     * @param string $name
      * @param string $namespace
      *
      * @throws InstanceIsAbstractClassException
@@ -103,6 +103,6 @@ interface FactoryInterface
      *
      * @return FactoryWorkerInterface
      */
-    public function getWorkerByName($name, $namespace='Everon\Component\Factory');
+    public function getWorkerByName(string $name, string $namespace='Everon\Component\Factory'): FactoryWorkerInterface;
 
 }

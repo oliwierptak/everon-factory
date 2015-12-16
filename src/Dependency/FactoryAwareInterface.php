@@ -17,7 +17,7 @@ interface FactoryAwareInterface
     /**
      * @return FactoryInterface
      */
-    public function getFactory();
+    public function getFactory(): FactoryInterface;
 
     /**
      * @param FactoryInterface $Factory

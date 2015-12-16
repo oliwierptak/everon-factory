@@ -35,12 +35,12 @@ abstract class AbstractWorker implements FactoryWorkerInterface
      * </code>
      *
      *
-     * @param $name
+     * @param string $name
      * @param \Closure $callback FactoryWorkerInterface should be returned
      *
      * @return void
      */
-    protected function registerWorker($name, \Closure $callback)
+    protected function registerWorker(string $name, \Closure $callback)
     {
         $this->getFactory()->getDependencyContainer()->propose($name, $callback);
     }
