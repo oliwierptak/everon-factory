@@ -1,8 +1,8 @@
-# Everon Factory Component v1.0
+# Everon Factory Component v2.0
 Library to handle dependency injection and instantiation. Allows to produce code that is easy to test.
+Optimized for Php 7.
 
 ## Works with
-* Php 5.6+
 * Php 7
 * Hhvm
 
