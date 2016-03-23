@@ -1,4 +1,4 @@
-# Everon Factory Component
+# Everon Factory Library
 Library to handle dependency injection and instantiation. Allows to produce code that is easy to test.
 
 ## Works with
