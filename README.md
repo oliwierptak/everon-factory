@@ -2,9 +2,7 @@
 Library to handle dependency injection and instantiation. Allows to produce code that is easy to test.
 
 ## Works with
-* Php 5.6+
-* Php 7
-* Hhvm
+* Php 7.2+
 
 ## Features
 * One line, lazy loaded dependency injection (via setters or constructors)
