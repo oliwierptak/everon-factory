@@ -20,7 +20,7 @@ use Mockery\MockInterface;
 class FactoryTest extends MockeryTest
 {
 
-    public function test_inject_dependencies_and_require_factory()
+    public function test_inject_dependencies_and_require_factory(): void
     {
         /* @var ContainerInterface $Container */
         $Container = Mockery::mock('Everon\Component\Factory\Dependency\ContainerInterface');
@@ -43,7 +43,7 @@ class FactoryTest extends MockeryTest
         $Factory->injectDependencies('Everon\Component\Factory\Tests\Unit\Doubles\FuzzStub', $Fuzz);
     }
 
-    public function test_inject_dependencies_without_factory()
+    public function test_inject_dependencies_without_factory(): void
     {
         /* @var ContainerInterface $Container */
         $Container = Mockery::mock('Everon\Component\Factory\Dependency\ContainerInterface');
@@ -61,7 +61,7 @@ class FactoryTest extends MockeryTest
         $Factory->injectDependencies('Everon\Component\Factory\Tests\Unit\Doubles\FuzzStub', $Fuzz);
     }
 
-    public function test_inject_dependency_once()
+    public function test_inject_dependency_once(): void
     {
         /* @var ContainerInterface $Container */
         $Container = Mockery::mock('Everon\Component\Factory\Dependency\ContainerInterface');
@@ -79,7 +79,7 @@ class FactoryTest extends MockeryTest
         $Factory->injectDependenciesOnce(BarStub::class, $LoggerStub);
     }
 
-    public function test_getWorkerByName()
+    public function test_getWorkerByName(): void
     {
         /* @var ContainerInterface $Container */
         $Container = Mockery::mock('Everon\Component\Factory\Dependency\ContainerInterface');
@@ -95,12 +95,11 @@ class FactoryTest extends MockeryTest
         $this->assertInstanceOf('Everon\Component\Factory\FactoryWorkerInterface', $Worker);
     }
 
-    /**
-     * @expectedException \Everon\Component\Factory\Exception\UndefinedFactoryWorkerException
-     * @expectedExceptionMessage Undefined Factory Worker "StubFactoryWorker"
-     */
-    public function test_getWorkerByName_should_throw_exception_when_wrong_worker_name()
+    public function test_getWorkerByName_should_throw_exception_when_wrong_worker_name(): void
     {
+        $this->expectException(\Everon\Component\Factory\Exception\UndefinedFactoryWorkerException::class);
+        $this->expectExceptionMessage('Undefined Factory Worker "StubFactoryWorker"');
+
         /* @var ContainerInterface $Container */
         $Container = Mockery::mock('Everon\Component\Factory\Dependency\ContainerInterface');
         $Factory = new Factory($Container);
@@ -113,7 +112,7 @@ class FactoryTest extends MockeryTest
         $this->assertInstanceOf('Everon\Component\Factory\FactoryWorkerInterface', $Worker);
     }
 
-    public function test_buildWorker()
+    public function test_buildWorker(): void
     {
         /* @var ContainerInterface $Container */
         $Container = Mockery::mock('Everon\Component\Factory\Dependency\ContainerInterface');
@@ -131,12 +130,11 @@ class FactoryTest extends MockeryTest
         $this->assertInstanceOf('Everon\Component\Factory\FactoryWorkerInterface', $Worker);
     }
 
-    /**
-     * @expectedException \Everon\Component\Factory\Exception\UndefinedClassException
-     * @expectedExceptionMessage Undefined class "Foo32847822ffs"
-     */
-    public function test_class_exists_should_throw_exception()
+    public function test_class_exists_should_throw_exception(): void
     {
+        $this->expectException(\Everon\Component\Factory\Exception\UndefinedClassException::class);
+        $this->expectExceptionMessage('Undefined class "Foo32847822ffs"');
+
         /* @var ContainerInterface $Container */
         $Container = Mockery::mock('Everon\Component\Factory\Dependency\ContainerInterface');
         $Factory = new Factory($Container);
