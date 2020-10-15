@@ -2,9 +2,7 @@
 Library to handle dependency injection and instantiation. Allows to produce code that is easy to test.
 
 ## Works with
-* Php 5.6+
-* Php 7
-* Hhvm
+* Php 7.2+
 
 ## Features
 * One line, lazy loaded dependency injection (via setters or constructors)
@@ -264,8 +262,8 @@ Use constructor for dependencies that are part of what the class is doing, and u
 In general, a ```Logger``` or ```FactoryWorker``` could be good examples of infrastructure type dependencies.
 
 ## Test Driven
-See [tests](https://github.com/oliwierptak/everon-factory/blob/development/tests/unit/)
-for [more examples with trait dependencies](https://github.com/oliwierptak/everon-factory/tree/development/tests/unit/doubles/).
+See [tests](https://github.com/oliwierptak/everon-factory/blob/master/tests/unit/)
+for [more examples with trait dependencies](https://github.com/oliwierptak/everon-factory/tree/master/tests/unit/doubles/).
 
 ## Example
 Check [Everon Criteria Builder](https://github.com/oliwierptak/everon-criteria-builder) to see how to use Everon Factory by example.
