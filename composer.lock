@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "everon/collection",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/oliwierptak/everon-collection.git",
-                "reference": "f8656bb5eecd5c6b9db0b4593c852ded5948c92b"
+                "reference": "78103dff4c20dc7f0468a6b27d5eb3305cf89b81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oliwierptak/everon-collection/zipball/f8656bb5eecd5c6b9db0b4593c852ded5948c92b",
-                "reference": "f8656bb5eecd5c6b9db0b4593c852ded5948c92b",
+                "url": "https://api.github.com/repos/oliwierptak/everon-collection/zipball/78103dff4c20dc7f0468a6b27d5eb3305cf89b81",
+                "reference": "78103dff4c20dc7f0468a6b27d5eb3305cf89b81",
                 "shasum": ""
             },
             "require": {
@@ -46,20 +46,20 @@
                 }
             ],
             "description": "Everon Collection Component",
-            "time": "2020-10-15T19:34:55+00:00"
+            "time": "2020-10-15T21:25:32+00:00"
         },
         {
             "name": "everon/utils",
-            "version": "2.0.2",
+            "version": "2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/oliwierptak/everon-utils.git",
-                "reference": "2a1894ec52ac66d11687ab778e008e639bba5674"
+                "reference": "53ffb2d5689227a38503c0c2609494656d7828e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oliwierptak/everon-utils/zipball/2a1894ec52ac66d11687ab778e008e639bba5674",
-                "reference": "2a1894ec52ac66d11687ab778e008e639bba5674",
+                "url": "https://api.github.com/repos/oliwierptak/everon-utils/zipball/53ffb2d5689227a38503c0c2609494656d7828e4",
+                "reference": "53ffb2d5689227a38503c0c2609494656d7828e4",
                 "shasum": ""
             },
             "require": {
@@ -88,7 +88,7 @@
                 }
             ],
             "description": "Everon Utils Component",
-            "time": "2020-10-15T19:30:07+00:00"
+            "time": "2020-10-15T21:09:18+00:00"
         }
     ],
     "packages-dev": [
