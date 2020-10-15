@@ -19,17 +19,11 @@ trait Logger
      */
     protected $Logger;
 
-    /**
-     * @return LoggerStub
-     */
-    public function getLogger()
+    public function getLogger(): LoggerStub
     {
         return $this->Logger;
     }
 
-    /**
-     * @param LoggerStub $Logger
-     */
     public function setLogger(LoggerStub $Logger)
     {
         $this->Logger = $Logger;

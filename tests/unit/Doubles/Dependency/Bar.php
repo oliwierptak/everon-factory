@@ -19,17 +19,11 @@ trait Bar
      */
     protected $Bar;
 
-    /**
-     * @return BarStub
-     */
-    public function getBar()
+    public function getBar(): BarStub
     {
         return $this->Bar;
     }
 
-    /**
-     * @param BarStub $Bar
-     */
     public function setBar(BarStub $Bar)
     {
         $this->Bar = $Bar;

@@ -19,17 +19,11 @@ trait Foo
      */
     protected $Foo;
 
-    /**
-     * @return FooStub
-     */
-    public function getFoo()
+    public function getFoo(): FooStub
     {
         return $this->Foo;
     }
 
-    /**
-     * @param FooStub $Foo
-     */
     public function setFoo(FooStub $Foo)
     {
         $this->Foo = $Foo;

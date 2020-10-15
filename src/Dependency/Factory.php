@@ -15,22 +15,16 @@ trait Factory
 {
 
     /**
-     * @var FactoryInterface
+     * @var \Everon\Component\Factory\FactoryInterface
      */
     protected $Factory;
 
-    /**
-     * @return FactoryInterface
-     */
-    public function getFactory()
+    public function getFactory(): FactoryInterface
     {
         return $this->Factory;
     }
 
-    /**
-     * @param FactoryInterface $Factory
-     */
-    public function setFactory(FactoryInterface $Factory)
+    public function setFactory(FactoryInterface $Factory): void
     {
         $this->Factory = $Factory;
     }

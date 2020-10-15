@@ -186,14 +186,6 @@ class DependencyContainerTest extends MockeryTest
         );
     }
 
-    public function test_inject_should_throw_exception_when_not_object(): void
-    {
-        $this->expectException(\Everon\Component\Factory\Exception\InstanceIsNotObjectException::class);
-        $this->expectExceptionMessage('Instance is not object');
-
-        $this->Container->inject('Foo2344db', 'foobar');
-    }
-
     public function test_resolve_should_throw_exception(): void
     {
         $this->expectException(\Everon\Component\Factory\Exception\UndefinedContainerDependencyException::class);

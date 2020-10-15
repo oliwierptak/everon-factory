@@ -17,9 +17,6 @@ class FuzzStub
     use Dependency\Foo;
     use Setter\Factory;
 
-    /**
-     * @param FooStub $Foo
-     */
     public function __construct(FooStub $Foo)
     {
         $this->Foo = $Foo;

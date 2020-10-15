@@ -24,9 +24,6 @@ class BarStub
      */
     protected $data = [];
 
-    /**
-     * BarStub constructor.
-     */
     public function __construct(LoggerStub $LoggerStub, $anotherArgument = 'anotherArgument', array $data=[])
     {
         $this->Logger = $LoggerStub;
@@ -34,34 +31,22 @@ class BarStub
         $this->data = $data;
     }
 
-    /**
-     * @return string
-     */
-    public function getAnotherArgument()
+    public function getAnotherArgument(): string
     {
         return $this->anotherArgument;
     }
 
-    /**
-     * @param string $anotherArgument
-     */
-    public function setAnotherArgument($anotherArgument)
+    public function setAnotherArgument(string $anotherArgument)
     {
         $this->anotherArgument = $anotherArgument;
     }
 
-    /**
-     * @return array
-     */
-    public function getData()
+    public function getData(): array
     {
         return $this->data;
     }
 
-    /**
-     * @param array $data
-     */
-    public function setData($data)
+    public function setData(array $data)
     {
         $this->data = $data;
     }

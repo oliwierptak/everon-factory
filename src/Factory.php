@@ -7,6 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Everon\Component\Factory;
 
 use Everon\Component\Factory\Dependency\ContainerInterface;
@@ -18,42 +19,34 @@ use Everon\Component\Factory\Exception\UndefinedFactoryWorkerException;
 
 class Factory implements FactoryInterface
 {
-
     /**
-     * @var ContainerInterface
+     * @var \Everon\Component\Factory\Dependency\ContainerInterface
      */
     protected static $DependencyContainer;
 
-    /**
-     * @param ContainerInterface $Container
-     */
     public function __construct(ContainerInterface $Container)
     {
         static::$DependencyContainer = $Container;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function injectDependencies($className, $Instance)
+    public function injectDependencies(string $className, $Instance): void
     {
         try {
             $this->getDependencyContainer()->inject($className, $Instance);
             $this->injectFactoryWhenRequired($className, $Instance);
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             throw new FailedToInjectDependenciesException($className, null, $e);
         }
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function injectDependenciesOnce($className, $Instance)
+    public function injectDependenciesOnce(string $className, $Instance): void
     {
         try {
             $this->getDependencyContainer()->injectOnce($className, $Instance);
             $this->injectFactoryWhenRequired($className, $Instance);
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             throw new FailedToInjectDependenciesException($className, null, $e);
         }
     }
@@ -62,9 +55,9 @@ class Factory implements FactoryInterface
      * @param string $className
      * @param object $Instance
      *
-     * @throws MissingFactoryAwareInterfaceException
-     *
      * @return void
+     * @throws \Everon\Component\Factory\Exception\MissingFactoryAwareInterfaceException
+     *
      */
     protected function injectFactoryWhenRequired($className, $Instance)
     {
@@ -77,18 +70,12 @@ class Factory implements FactoryInterface
         }
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getDependencyContainer()
+    public function getDependencyContainer(): ContainerInterface
     {
         return static::$DependencyContainer;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getFullClassName($namespace, $className)
+    public function getFullClassName(string $namespace, string $className): string
     {
         if ($className[0] === '\\') { //used for when laading classmap from cache
             return $className; //absolute name
@@ -97,20 +84,14 @@ class Factory implements FactoryInterface
         return $namespace . '\\' . $className;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function classExists($class)
+    public function classExists(string $class): void
     {
         if (class_exists($class, true) === false) {
             throw new UndefinedClassException($class);
         }
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function buildWorker($className)
+    public function buildWorker(string $className): FactoryWorkerInterface
     {
         if ($this->classExists($className) === false) {
             throw new UndefinedClassException();
@@ -122,18 +103,19 @@ class Factory implements FactoryInterface
         return $Worker;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function registerWorkerCallback($name, \Closure $Worker)
+    public function registerWorkerCallback(string $name, \Closure $Worker): void
     {
         $this->getDependencyContainer()->propose($name, $Worker);
     }
 
     /**
-     * @inheritdoc
+     * @param string $name
+     *
+     * @return \Everon\Component\Factory\FactoryWorkerInterface
+     * @throws \Everon\Component\Factory\Exception\UndefinedFactoryWorkerException
+     * @throws \Everon\Component\Factory\Exception\UndefinedContainerDependencyException
      */
-    public function getWorkerByName($name)
+    public function getWorkerByName(string $name): FactoryWorkerInterface
     {
         $Worker = $this->getDependencyContainer()->resolve($name);
 
@@ -143,5 +125,4 @@ class Factory implements FactoryInterface
 
         return $Worker;
     }
-
 }

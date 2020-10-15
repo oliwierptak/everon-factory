@@ -7,6 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Everon\Component\Factory\Dependency;
 
 use Everon\Component\Collection\Collection;
@@ -20,7 +21,6 @@ use Everon\Component\Utils\Text\LastTokenToName;
 
 class Container implements ContainerInterface
 {
-
     use EndsWith;
     use LastTokenToName;
 
@@ -28,27 +28,27 @@ class Container implements ContainerInterface
     const TYPE_SETTER_INJECTION = 'Dependency\Setter';
 
     /**
-     * @var CollectionInterface
+     * @var \Everon\Component\Collection\CollectionInterface
      */
     protected $ServiceDefinitionCollection;
 
     /**
-     * @var CollectionInterface
+     * @var \Everon\Component\Collection\CollectionInterface
      */
     protected $ServiceCollection;
 
     /**
-     * @var CollectionInterface
+     * @var \Everon\Component\Collection\CollectionInterface
      */
     protected $ClassDependencyCollection;
 
     /**
-     * @var CollectionInterface
+     * @var \Everon\Component\Collection\CollectionInterface
      */
     protected $RequireFactoryCollection;
 
     /**
-     * @var CollectionInterface
+     * @var \Everon\Component\Collection\CollectionInterface
      */
     protected $InjectedCollection;
 
@@ -56,32 +56,28 @@ class Container implements ContainerInterface
      * @param string $dependencyName
      * @param mixed $Receiver
      *
-     * @throws UndefinedContainerDependencyException
-     * @throws UndefinedDependencySetterException
+     * @throws \Everon\Component\Factory\Exception\UndefinedContainerDependencyException
+     * @throws \Everon\Component\Factory\Exception\UndefinedDependencySetterException
      */
-    protected function injectSetterDependency($dependencyName, $Receiver)
+    protected function injectSetterDependency(string $dependencyName, $Receiver): void
     {
         $receiverClassName = get_class($Receiver);
         $method = 'set' . $dependencyName; //eg. setConfigManager
         if (method_exists($Receiver, $method) === false) {
-            throw new UndefinedDependencySetterException([
-                $method,
-                $dependencyName,
-                $receiverClassName,
-            ]);
+            throw new UndefinedDependencySetterException(
+                [
+                    $method,
+                    $dependencyName,
+                    $receiverClassName,
+                ]
+            );
         }
 
         $Dependency = $this->resolve($dependencyName);
         $Receiver->$method($Dependency);
     }
 
-    /**
-     * @param string $className
-     * @param bool $autoload
-     *
-     * @return array
-     */
-    protected function getClassSetterDependencies($className, $autoload = true)
+    protected function getClassSetterDependencies(string $className, bool $autoload = true): array
     {
         if ($this->getClassDependencyCollection()->has($className)) {
             return $this->getClassDependencyCollection()->get($className);
@@ -98,21 +94,19 @@ class Container implements ContainerInterface
         }
 
         $dependencies = array_keys($traits);
-        $dependencies = array_filter($dependencies, function ($dependencyName) {
-            return $this->isSetterInjection($dependencyName);
-        });
+        $dependencies = array_filter(
+            $dependencies,
+            function ($dependencyName) {
+                return $this->isSetterInjection($dependencyName);
+            }
+        );
 
         $this->getClassDependencyCollection()->set($className, $dependencies);
 
         return $this->getClassDependencyCollection()->get($className);
     }
 
-    /**
-     * @param string $dependencyName
-     *
-     * @return bool
-     */
-    protected function isSetterInjection($dependencyName)
+    protected function isSetterInjection(string $dependencyName): bool
     {
         $requiredDependency = $this->textLastTokenToName($dependencyName);
         $setterDependency = sprintf('%s\%s', static::TYPE_SETTER_INJECTION, $requiredDependency);
@@ -120,20 +114,21 @@ class Container implements ContainerInterface
         return $this->textEndsWith($dependencyName, $setterDependency);
     }
 
-    /**
-     * @param string $dependencyName
-     *
-     * @return bool
-     */
-    protected function isFactoryInjection($dependencyName)
+    protected function isFactoryInjection(string $dependencyName): bool
     {
         return $this->textEndsWith($dependencyName, static::DEPENDENCY_SETTER_FACTORY);
     }
 
     /**
-     * @inheritdoc
+     * @param string $receiverClassName
+     * @param object $ReceiverInstance
+     *
+     * @return void
+     * @throws \Everon\Component\Factory\Exception\UndefinedContainerDependencyException
+     * @throws \Everon\Component\Factory\Exception\UndefinedDependencySetterException
+     * @throws \Everon\Component\Factory\Exception\InstanceIsNotObjectException
      */
-    public function inject($receiverClassName, $ReceiverInstance)
+    public function inject(string $receiverClassName, object $ReceiverInstance): void
     {
         if (is_object($ReceiverInstance) === false) {
             throw new InstanceIsNotObjectException();
@@ -154,9 +149,15 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @inheritdoc
+     * @param string $receiverClassName
+     * @param object $ReceiverInstance
+     *
+     * @return void
+     * @throws \Everon\Component\Factory\Exception\UndefinedContainerDependencyException
+     * @throws \Everon\Component\Factory\Exception\UndefinedDependencySetterException
+     * @throws \Everon\Component\Factory\Exception\InstanceIsNotObjectException
      */
-    public function injectOnce($receiverClassName, $ReceiverInstance)
+    public function injectOnce(string $receiverClassName, object $ReceiverInstance): void
     {
         if ($this->isInjected($receiverClassName)) {
             return;
@@ -165,10 +166,7 @@ class Container implements ContainerInterface
         $this->inject($receiverClassName, $ReceiverInstance);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function register($name, \Closure $ServiceClosure)
+    public function register(string $name, \Closure $ServiceClosure): void
     {
         if ($this->isRegistered($name)) {
             throw new DependencyServiceAlreadyRegisteredException($name);
@@ -180,9 +178,13 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @inheritdoc
+     * @param string $name
+     * @param \Closure $ServiceClosure
+     *
+     * @return void
+     * @throws \Everon\Component\Factory\Exception\DependencyServiceAlreadyRegisteredException
      */
-    public function propose($name, \Closure $ServiceClosure)
+    public function propose(string $name, \Closure $ServiceClosure): void
     {
         if ($this->isRegistered($name)) {
             return;
@@ -191,10 +193,7 @@ class Container implements ContainerInterface
         $this->register($name, $ServiceClosure);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function resolve($name)
+    public function resolve(string $name)
     {
         if ($this->getServiceDefinitionCollection()->has($name) === false) {
             throw new UndefinedContainerDependencyException($name);
@@ -213,34 +212,22 @@ class Container implements ContainerInterface
         return $this->getServiceCollection()->get($name);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function isFactoryRequired($className)
+    public function isFactoryRequired(string $className): bool
     {
         return $this->getRequireFactoryCollection()->has($className);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function isInjected($className)
+    public function isInjected(string $className): bool
     {
         return $this->getInjectedCollection()->has($className);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function isRegistered($name)
+    public function isRegistered(string $name): bool
     {
         return ($this->getServiceDefinitionCollection()->has($name) || $this->getServiceCollection()->has($name));
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getServiceDefinitionCollection()
+    public function getServiceDefinitionCollection(): CollectionInterface
     {
         if ($this->ServiceDefinitionCollection === null) {
             $this->ServiceDefinitionCollection = new Collection([]);
@@ -249,10 +236,7 @@ class Container implements ContainerInterface
         return $this->ServiceDefinitionCollection;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getClassDependencyCollection()
+    public function getClassDependencyCollection(): CollectionInterface
     {
         if ($this->ClassDependencyCollection === null) {
             $this->ClassDependencyCollection = new Collection([]);
@@ -261,10 +245,7 @@ class Container implements ContainerInterface
         return $this->ClassDependencyCollection;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getServiceCollection()
+    public function getServiceCollection(): CollectionInterface
     {
         if ($this->ServiceCollection === null) {
             $this->ServiceCollection = new Collection([]);
@@ -273,10 +254,7 @@ class Container implements ContainerInterface
         return $this->ServiceCollection;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getRequireFactoryCollection()
+    public function getRequireFactoryCollection(): CollectionInterface
     {
         if ($this->RequireFactoryCollection === null) {
             $this->RequireFactoryCollection = new Collection([]);
@@ -285,10 +263,7 @@ class Container implements ContainerInterface
         return $this->RequireFactoryCollection;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getInjectedCollection()
+    public function getInjectedCollection(): CollectionInterface
     {
         if ($this->InjectedCollection === null) {
             $this->InjectedCollection = new Collection([]);
@@ -296,5 +271,4 @@ class Container implements ContainerInterface
 
         return $this->InjectedCollection;
     }
-
 }

@@ -13,11 +13,11 @@ use Everon\Component\Factory\AbstractWorker;
 
 class StubFactoryWorker extends AbstractWorker
 {
-
     /**
-     * @return FuzzStub
+     * @return \Everon\Component\Factory\Tests\Unit\Doubles\FuzzStub
+     * @throws \Everon\Component\Factory\Exception\FailedToInjectDependenciesException
      */
-    public function buildFuzz()
+    public function buildFuzz(): FuzzStub
     {
         $FooStub = $this->buildFoo();
 
@@ -28,9 +28,10 @@ class StubFactoryWorker extends AbstractWorker
     }
 
     /**
-     * @return FooStub
+     * @return \Everon\Component\Factory\Tests\Unit\Doubles\FooStub
+     * @throws \Everon\Component\Factory\Exception\FailedToInjectDependenciesException
      */
-    public function buildFoo()
+    public function buildFoo(): FooStub
     {
         $FooStub = new FooStub();
         $this->getFactory()->injectDependencies(FooStub::class, $FooStub);
@@ -39,9 +40,14 @@ class StubFactoryWorker extends AbstractWorker
     }
 
     /**
-     * @return BarStub
+     * @param mixed $anotherArgument
+     * @param array $data
+     *
+     * @return \Everon\Component\Factory\Tests\Unit\Doubles\BarStub
+     * @throws \Everon\Component\Factory\Exception\UndefinedContainerDependencyException
+     * @throws \Everon\Component\Factory\Exception\FailedToInjectDependenciesException
      */
-    public function buildBar($anotherArgument, array $data)
+    public function buildBar($anotherArgument, array $data): BarStub
     {
         //$LoggerStub = $this->getFactory()->buildWithEmptyConstructor('LoggerStub', $namespace);
         $LoggerStub = $this->getFactory()->getDependencyContainer()->resolve('Logger');
@@ -53,9 +59,10 @@ class StubFactoryWorker extends AbstractWorker
     }
 
     /**
-     * @return LoggerStub
+     * @return \Everon\Component\Factory\Tests\Unit\Doubles\LoggerStub
+     * @throws \Everon\Component\Factory\Exception\FailedToInjectDependenciesException
      */
-    public function buildLogger()
+    public function buildLogger(): LoggerStub
     {
         $LoggerStub = new LoggerStub();
         $this->getFactory()->injectDependencies(LoggerStub::class, $LoggerStub);

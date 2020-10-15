@@ -14,9 +14,6 @@ abstract class AbstractWorker implements FactoryWorkerInterface
 
     use Dependency\Factory;
 
-    /**
-     * @param FactoryInterface $Factory
-     */
     public function __construct(FactoryInterface $Factory)
     {
         $this->Factory = $Factory;

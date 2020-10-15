@@ -21,10 +21,7 @@ class FooStub
         $this->timeStamp = rand(0, time());
     }
 
-    /**
-     * @return LoggerStub
-     */
-    public function getLogger()
+    public function getLogger(): LoggerStub
     {
         return $this->getBar()->getLogger();
     }

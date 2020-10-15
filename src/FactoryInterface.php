@@ -7,80 +7,59 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Everon\Component\Factory;
 
-use Everon\Component\Factory\Exception\FailedToInjectDependenciesException;
-use Everon\Component\Factory\Exception\UndefinedClassException;
-use Everon\Component\Factory\Exception\UndefinedFactoryWorkerException;
+use Everon\Component\Factory\Dependency\ContainerInterface;
 
 interface FactoryInterface
 {
-
-    /**
-     * @return \Everon\Component\Factory\Dependency\ContainerInterface
-     */
-    public function getDependencyContainer();
+    public function getDependencyContainer(): ContainerInterface;
 
     /**
      * @param string $className
      * @param mixed $Instance
      *
-     * @throws FailedToInjectDependenciesException
-     *
      * @return void
+     * @throws \Everon\Component\Factory\Exception\FailedToInjectDependenciesException
      */
-    public function injectDependencies($className, $Instance);
+    public function injectDependencies(string $className, $Instance): void;
 
     /**
      * @param string $className
      * @param mixed $Instance
      *
-     * @throws FailedToInjectDependenciesException
      * @return void
+     * @throws \Everon\Component\Factory\Exception\FailedToInjectDependenciesException
      */
-    public function injectDependenciesOnce($className, $Instance);
+    public function injectDependenciesOnce(string $className, $Instance): void;
+
+    public function getFullClassName(string $namespace, string $className): string;
 
     /**
-     * @param string $namespace
-     * @param string $className
-     *
-     * @return string
-     */
-    public function getFullClassName($namespace, $className);
-
-    /**
-     * @param $class
-     *
-     * @throws UndefinedClassException
+     * @param string $class
      *
      * @return void
+     * @throws \Everon\Component\Factory\Exception\UndefinedClassException
      */
-    public function classExists($class);
+    public function classExists(string $class): void;
 
     /**
      * @param string $className
      *
-     * @throws UndefinedClassException
-     *
-     * @return FactoryWorkerInterface
+     * @return \Everon\Component\Factory\FactoryWorkerInterface
+     * @throws \Everon\Component\Factory\Exception\UndefinedClassException
      */
-    public function buildWorker($className);
+    public function buildWorker(string $className): FactoryWorkerInterface;
 
-    /**
-     * @param string $name
-     * @param \Closure $Worker
-     *
-     * @return void
-     */
-    public function registerWorkerCallback($name, \Closure $Worker);
+    public function registerWorkerCallback(string $name, \Closure $Worker): void;
 
     /**
      * @param string $name
      *
-     * @throws UndefinedFactoryWorkerException
-     *
-     * @return FactoryWorkerInterface
+     * @return \Everon\Component\Factory\FactoryWorkerInterface
+     * @throws \Everon\Component\Factory\Exception\UndefinedFactoryWorkerException
+     * @throws \Everon\Component\Factory\Exception\UndefinedContainerDependencyException
      */
-    public function getWorkerByName($name);
-
+    public function getWorkerByName(string $name): FactoryWorkerInterface;
 }

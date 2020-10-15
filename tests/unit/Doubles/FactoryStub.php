@@ -13,11 +13,13 @@ use Everon\Component\Factory\Factory;
 
 class FactoryStub extends Factory
 {
-
     /**
-     * @return FuzzStub
+     * @param \Everon\Component\Factory\Tests\Unit\Doubles\FooStub $FooStub
+     *
+     * @return \Everon\Component\Factory\Tests\Unit\Doubles\FuzzStub
+     * @throws \Everon\Component\Factory\Exception\FailedToInjectDependenciesException
      */
-    public function buildFuzz(FooStub $FooStub)
+    public function buildFuzz(FooStub $FooStub): FuzzStub
     {
         $FuzzStub = new FuzzStub($FooStub);
         $this->injectDependencies(FuzzStub::class, $FuzzStub);
@@ -26,9 +28,10 @@ class FactoryStub extends Factory
     }
 
     /**
-     * @return FooStub
+     * @return \Everon\Component\Factory\Tests\Unit\Doubles\FooStub
+     * @throws \Everon\Component\Factory\Exception\FailedToInjectDependenciesException
      */
-    public function buildFoo()
+    public function buildFoo(): FooStub
     {
         $FooStub = new FooStub();
         $this->injectDependencies(FooStub::class, $FooStub);
@@ -37,9 +40,14 @@ class FactoryStub extends Factory
     }
 
     /**
-     * @return BarStub
+     * @param \Everon\Component\Factory\Tests\Unit\Doubles\LoggerStub $LoggerStub
+     * @param $anotherArgument
+     * @param array $data
+     *
+     * @return \Everon\Component\Factory\Tests\Unit\Doubles\BarStub
+     * @throws \Everon\Component\Factory\Exception\FailedToInjectDependenciesException
      */
-    public function buildBar(LoggerStub $LoggerStub, $anotherArgument, array $data)
+    public function buildBar(LoggerStub $LoggerStub, $anotherArgument, array $data): BarStub
     {
         $BarStub = new BarStub($LoggerStub, $anotherArgument, $data);
         $this->injectDependencies(BarStub::class, $BarStub);
@@ -48,9 +56,10 @@ class FactoryStub extends Factory
     }
 
     /**
-     * @return LoggerStub
+     * @return \Everon\Component\Factory\Tests\Unit\Doubles\LoggerStub
+     * @throws \Everon\Component\Factory\Exception\FailedToInjectDependenciesException
      */
-    public function buildLogger()
+    public function buildLogger(): LoggerStub
     {
         $LoggerStub = new LoggerStub();
         $this->injectDependencies(LoggerStub::class, $LoggerStub);
