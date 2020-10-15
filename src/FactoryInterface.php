@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /**
  * This file is part of the Everon components.
  *
@@ -9,7 +9,6 @@
  */
 namespace Everon\Component\Factory;
 
-use Everon\Component\CriteriaBuilder\Criteria\ContainerInterface;
 use Everon\Component\Factory\Exception\FailedToInjectDependenciesException;
 use Everon\Component\Factory\Exception\UndefinedClassException;
 use Everon\Component\Factory\Exception\UndefinedFactoryWorkerException;
@@ -18,7 +17,7 @@ interface FactoryInterface
 {
 
     /**
-     * @return ContainerInterface
+     * @return \Everon\Component\Factory\Dependency\ContainerInterface
      */
     public function getDependencyContainer();
 
