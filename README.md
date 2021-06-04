@@ -1,8 +1,9 @@
 # Everon Factory Component
 Library to handle dependency injection and instantiation. Allows to produce code that is easy to test.
 
-## Works with
-* Php 7.2+
+### Versions
+- Use v1.x and v2.x with PHP 7.2+
+- Use v3.x with PHP 8+
 
 ## Features
 * One line, lazy loaded dependency injection (via setters or constructors)
